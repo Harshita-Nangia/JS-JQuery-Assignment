@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>JQuery Assignment</title>
+    
+    <style type="text/css">      /* CSS GOES HERE */
+       body{
+           background: #e7d7c1;
+       }
+       div.card {
+            width: 100%;
+            height: 120px;            
+            margin: 30px;
+            display: none;
+            font-weight: bold;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            background: linear-gradient(to right, #9d4edd, #c77dff, #e0aaff);
+            color: #240046;
+            padding-left: 0.5rem;
+            padding-top: 0.5rem;
+        }
+
+        div.card:hover , #load:hover{
+            border: 5px solid #e0aaff;
+            background: linear-gradient(to right, #240046, #3c096c,#5a189a);
+            color: #e0aaff;
+            padding-left: 1rem;
+            padding-top: 1rem;
+        }
+        h3 { 
+            text-transform: uppercase;
+        }
+
+        div.comments {
+            border: 4px solid #240046;
+            padding:3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #9d4edd, #c77dff, #e0aaff);
+        }
+        #load{
+            cursor: pointer;
+            font-size: 2rem;
+            width: 300;
+            padding: 1rem;
+            border: 4px solid #240046;    
+        };
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <div class="comments" >
+            <center><h2>HARSHITA NANGIA : 22156</h2></center>
+            <center><h3>JQUERY ASSIGNMENT</h3></center>
+        </div>
+        <center><button id="load">Load Data</button></center>
+    </div>
+
+    <div class="cards" id="cards"></div>
+
+    <script> //JQ LOGIC GOES HERE
+
+        $("#load").on("click", function () {
+            $("#loader").hide();
+            var payload = {
+                "url": "https://jsonplaceholder.typicode.com/posts",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+            };
+
+            $.ajax(payload).done(function (items) {
+                var cid = $("#cards");
+                var temp = 1;
+                for (var item of items) {
+                    var id = "card" + temp;
+                    var markup =
+                        `<div class="card" id="${id}"><h3>${item['title']}</h3><p>${item['body']}</p></div>`;
+                    $(cid).append(markup);
+                    $("#" + id).show(550 * temp);
+                    temp++;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
